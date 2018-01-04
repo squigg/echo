@@ -1,7 +1,8 @@
 module.exports = {
     entry: "./src/echo.ts",
     output: {
-        filename: "dist/echo.js"
+        filename: "dist/echo.js",
+        libraryTarget: "umd"
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
