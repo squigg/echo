@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(typeof self !== 'undefined' ? self : this, function() {
-return /******/ (function(modules) { // webpackBootstrap
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -100,7 +91,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 
-
 /***/ }),
 /* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -133,18 +123,15 @@ class Connector {
         let selector;
         if (window && window['Laravel'] && window['Laravel'].csrfToken) {
             return window['Laravel'].csrfToken;
-        }
-        else if (this.options.csrfToken) {
+        } else if (this.options.csrfToken) {
             return this.options.csrfToken;
-        }
-        else if (typeof document !== 'undefined' && (selector = document.querySelector('meta[name="csrf-token"]'))) {
+        } else if (typeof document !== 'undefined' && (selector = document.querySelector('meta[name="csrf-token"]'))) {
             return selector.getAttribute('content');
         }
         return null;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Connector;
-
 
 
 /***/ }),
@@ -161,7 +148,6 @@ class Channel {
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Channel;
-
 
 
 /***/ }),
@@ -204,7 +190,6 @@ class PusherChannel extends __WEBPACK_IMPORTED_MODULE_1__channel__["a" /* Channe
 /* harmony export (immutable) */ __webpack_exports__["a"] = PusherChannel;
 
 
-
 /***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -212,7 +197,6 @@ class PusherChannel extends __WEBPACK_IMPORTED_MODULE_1__channel__["a" /* Channe
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_formatter__ = __webpack_require__(8);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__event_formatter__["a"]; });
-
 
 
 /***/ }),
@@ -237,8 +221,7 @@ class Echo {
         }
         if (this.options.broadcaster == 'pusher') {
             this.connector = new __WEBPACK_IMPORTED_MODULE_0__connector__["a" /* PusherConnector */](this.options);
-        }
-        else if (this.options.broadcaster == 'socket.io') {
+        } else if (this.options.broadcaster == 'socket.io') {
             this.connector = new __WEBPACK_IMPORTED_MODULE_0__connector__["b" /* SocketIoConnector */](this.options);
         }
     }
@@ -251,7 +234,7 @@ class Echo {
         });
     }
     registerAxiosRequestInterceptor() {
-        axios.interceptors.request.use((config) => {
+        axios.interceptors.request.use(config => {
             if (this.socketId()) {
                 config.headers['X-Socket-Id'] = this.socketId();
             }
@@ -261,7 +244,7 @@ class Echo {
     registerjQueryAjaxSetup() {
         if (typeof jQuery.ajax != 'undefined') {
             jQuery.ajaxSetup({
-                beforeSend: (xhr) => {
+                beforeSend: xhr => {
                     if (this.socketId()) {
                         xhr.setRequestHeader('X-Socket-Id', this.socketId());
                     }
@@ -294,7 +277,6 @@ class Echo {
 /* harmony export (immutable) */ __webpack_exports__["default"] = Echo;
 
 
-
 /***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -306,7 +288,6 @@ class Echo {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__pusher_connector__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__socketio_connector__ = __webpack_require__(14);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__socketio_connector__["a"]; });
-
 
 
 
@@ -368,7 +349,6 @@ class PusherConnector extends __WEBPACK_IMPORTED_MODULE_0__connector__["a" /* Co
 /* harmony export (immutable) */ __webpack_exports__["a"] = PusherConnector;
 
 
-
 /***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -381,8 +361,7 @@ class EventFormatter {
     format(event) {
         if (event.charAt(0) === '.' || event.charAt(0) === '\\') {
             return event.substr(1);
-        }
-        else if (this.namespace) {
+        } else if (this.namespace) {
             event = this.namespace + '.' + event;
         }
         return event.replace(/\./g, '\\');
@@ -392,7 +371,6 @@ class EventFormatter {
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = EventFormatter;
-
 
 
 /***/ }),
@@ -411,7 +389,6 @@ class PusherPrivateChannel extends __WEBPACK_IMPORTED_MODULE_0__pusher_channel__
 /* harmony export (immutable) */ __webpack_exports__["a"] = PusherPrivateChannel;
 
 
-
 /***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -421,19 +398,19 @@ class PusherPrivateChannel extends __WEBPACK_IMPORTED_MODULE_0__pusher_channel__
 
 class PusherPresenceChannel extends __WEBPACK_IMPORTED_MODULE_0__pusher_channel__["a" /* PusherChannel */] {
     here(callback) {
-        this.on('pusher:subscription_succeeded', (data) => {
+        this.on('pusher:subscription_succeeded', data => {
             callback(Object.keys(data.members).map(k => data.members[k]));
         });
         return this;
     }
     joining(callback) {
-        this.on('pusher:member_added', (member) => {
+        this.on('pusher:member_added', member => {
             callback(member.info);
         });
         return this;
     }
     leaving(callback) {
-        this.on('pusher:member_removed', (member) => {
+        this.on('pusher:member_removed', member => {
             callback(member.info);
         });
         return this;
@@ -444,7 +421,6 @@ class PusherPresenceChannel extends __WEBPACK_IMPORTED_MODULE_0__pusher_channel_
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = PusherPresenceChannel;
-
 
 
 /***/ }),
@@ -516,7 +492,6 @@ class SocketIoChannel extends __WEBPACK_IMPORTED_MODULE_1__channel__["a" /* Chan
 /* harmony export (immutable) */ __webpack_exports__["a"] = SocketIoChannel;
 
 
-
 /***/ }),
 /* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -537,7 +512,6 @@ class SocketIoPrivateChannel extends __WEBPACK_IMPORTED_MODULE_0____["d" /* Sock
 /* harmony export (immutable) */ __webpack_exports__["a"] = SocketIoPrivateChannel;
 
 
-
 /***/ }),
 /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -547,22 +521,21 @@ class SocketIoPrivateChannel extends __WEBPACK_IMPORTED_MODULE_0____["d" /* Sock
 
 class SocketIoPresenceChannel extends __WEBPACK_IMPORTED_MODULE_0____["f" /* SocketIoPrivateChannel */] {
     here(callback) {
-        this.on('presence:subscribed', (members) => {
+        this.on('presence:subscribed', members => {
             callback(members.map(m => m.user_info));
         });
         return this;
     }
     joining(callback) {
-        this.on('presence:joining', (member) => callback(member.user_info));
+        this.on('presence:joining', member => callback(member.user_info));
         return this;
     }
     leaving(callback) {
-        this.on('presence:leaving', (member) => callback(member.user_info));
+        this.on('presence:leaving', member => callback(member.user_info));
         return this;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = SocketIoPresenceChannel;
-
 
 
 /***/ }),
@@ -623,7 +596,5 @@ class SocketIoConnector extends __WEBPACK_IMPORTED_MODULE_0__connector__["a" /* 
 /* harmony export (immutable) */ __webpack_exports__["a"] = SocketIoConnector;
 
 
-
 /***/ })
 /******/ ]);
-});
