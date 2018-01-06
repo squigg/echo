@@ -23,15 +23,14 @@
   "engines": {
     "node": ">6.0.*"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^6.0.96",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "typescript": "^2.6.2"
-  },
-  "devDependencies": {
-    "@types/node": "^6.0.85",
     "pusher-js": "^3.2.1",
     "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
     "webpack": "^3.10.0"
   }
 }
