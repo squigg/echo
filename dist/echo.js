@@ -121,7 +121,7 @@ class Connector {
     }
     csrfToken() {
         let selector;
-        if (window && window['Laravel'] && window['Laravel'].csrfToken) {
+        if (typeof window !== 'undefined' && window['Laravel'] && window['Laravel'].csrfToken) {
             return window['Laravel'].csrfToken;
         } else if (this.options.csrfToken) {
             return this.options.csrfToken;
@@ -360,7 +360,7 @@ class EventFormatter {
     }
     format(event) {
         if (event.charAt(0) === '.' || event.charAt(0) === '\\') {
-            return event.substr(1);
+            event = event.substr(1);
         } else if (this.namespace) {
             event = this.namespace + '.' + event;
         }
@@ -553,8 +553,18 @@ class SocketIoConnector extends __WEBPACK_IMPORTED_MODULE_0__connector__["a" /* 
         this.channels = {};
     }
     connect() {
+        let io = this.getSocketIO();
         this.socket = io(this.options.host, this.options);
         return this.socket;
+    }
+    getSocketIO() {
+        if (typeof io !== 'undefined') {
+            return io;
+        }
+        if (this.options.client !== 'undefined') {
+            return this.options.client;
+        }
+        throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
     }
     listen(name, event, callback) {
         return this.channel(name).listen(event, callback);
